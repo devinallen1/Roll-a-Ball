@@ -859,8 +859,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f695f5abd5c4e34b8840caed6b1baa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 5
+  Speed: 10
   countText: {fileID: 269167190}
+  winText: {fileID: 807083097}
 --- !u!54 &452932649
 Rigidbody:
   m_ObjectHideFlags: 0
