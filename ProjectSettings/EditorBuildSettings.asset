@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/MiniGame.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/_Scenes/InClassLevel.unity
+    guid: 3b948a85cf84bcb4aa198f2224db7ee0
   m_configObjects: {}

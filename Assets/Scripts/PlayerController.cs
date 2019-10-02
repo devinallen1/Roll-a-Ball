@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+        if (Input.GetKey("escape")) { Application.Quit(); }
         SetWinText();
     }
 
@@ -32,7 +35,7 @@ public class PlayerController : MonoBehaviour
         float moveVertical = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-
+        //movement = fpsCam.transform.TransformDirection(movement);
         rb.AddForce(movement * Speed);
     }
 
@@ -55,6 +58,7 @@ public class PlayerController : MonoBehaviour
     {
         if (count == 12)
         {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             winText.text = "You Win!";
         }
     }
