@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     public string Win_Message;
     public TextMeshProUGUI countText;
     public TextMeshProUGUI winText;
+    public GameObject m_winPanel;
+    public TextMeshProUGUI endScore;
+    public TextMeshProUGUI SecretScore;
     //public Camera camera;
     //public CinemachineFreeLook Camera;
     public Camera Camera;
@@ -18,13 +21,17 @@ public class PlayerController : MonoBehaviour
 
     #region  --PRIVATE VARIABLES--
     private Rigidbody rb;
+    private PlayerController playerCon;
     private int count;
+    private int countSecret;
+    private bool isGameEnded;
     
     #endregion
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerCon = GetComponent<PlayerController>();
         count = 0;
         SetCountText();
         winText.text = "";
@@ -34,6 +41,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey("escape")) { Application.Quit(); }
         SetWinText();
+        if (isGameEnded)
+        {
+            EndLevel();
+        }
     }
 
     void FixedUpdate()
@@ -64,6 +75,8 @@ public class PlayerController : MonoBehaviour
             //other.gameObject.SetActive(false);
             Renderer renderer = other.GetComponent<Renderer>();
             renderer.enabled = false;
+            SphereCollider sc = other.GetComponent<SphereCollider>();
+            sc.enabled = false;
             count++;
             SetCountText();
             AudioSource temp = other.GetComponent<AudioSource>();
@@ -71,7 +84,40 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject, temp.clip.length);
 
         }
-        
+        if (other.gameObject.CompareTag("EndLevel"))
+        {
+            MeshCollider mc = other.GetComponent<MeshCollider>();
+            mc.enabled = false;
+            Renderer renderer = other.GetComponent<Renderer>();
+            AudioSource temp = other.GetComponent<AudioSource>();
+            temp.Play();
+            renderer.enabled = false;
+            count++;
+            SetCountText();
+            isGameEnded = true;
+            //playerCon.enabled = false;
+            
+        }
+        if (other.gameObject.CompareTag("SecretRing"))
+        {
+            SphereCollider sc = other.GetComponent<SphereCollider>();
+            sc.enabled = false;
+            Renderer renderer = other.GetComponent<Renderer>();
+            renderer.enabled = false;
+            countSecret++;
+            AudioSource temp = other.GetComponent<AudioSource>();
+            temp.Play();
+            Destroy(other.gameObject, temp.clip.length);
+        }
+
+    }
+
+    void EndLevel()
+    {
+        endScore.text ="Rings Collected: " + count.ToString() + "/ 80";
+        SecretScore.text = "Secret Rings Collected: " + countSecret.ToString() + "/ 5";
+        m_winPanel.SetActive(true);
+
     }
 
     void SetCountText()
@@ -81,11 +127,11 @@ public class PlayerController : MonoBehaviour
 
     void SetWinText()
     {
-        if (count == 12)
-        {
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            winText.text = Win_Message;
-        }
+        //if (count == 12)
+        //{
+        //    //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //    winText.text = Win_Message;
+        //}
     }
 
 

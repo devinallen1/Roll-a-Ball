@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Pick Up
+  - EndLevel
+  - SecretRing
   layers:
   - Default
   - TransparentFX
